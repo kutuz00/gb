@@ -3,10 +3,10 @@ import './styles/Message.sass'
 function Message(props) {
     return (
 
-        <header className="Message">
-
-            <h3>{props.text}</h3>
-        </header>
+        <div className="messageList">
+            <p className="message message-author">{props.messageList.author}</p>
+            <p className="message">{props.messageList.text}</p>
+        </div>
 
 
     );
