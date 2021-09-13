@@ -16,26 +16,26 @@ const defaultMessages = {
     ],
 }
 const defaultChats =
-    [{ chatName: "Example 1", chatId: uuidv4() },
-    { chatName: "Example 2", chatId: uuidv4() }];
+    [{ chatName: "Example 1", id: "chat-1" },
+    { chatName: "Example 2", id: "chat-2" }];
 function Chats() {
     const { chatId } = useParams();
     const [messages, setMessages] = useState(defaultMessages);
-    const [chats] = useState(defaultChats);
-    const sendMessage = useCallback((message) => {
+    const [chats, setChats] = useState(defaultChats);
+    const sendMessage = useCallback((messages) => {
         setMessages((prevMess) => ({
             ...prevMess,
             [chatId]: [
-                ...prevMess[chatId], message
+                ...prevMess[chatId], messages
             ],
         }));
     }, [chatId]);
-
+    console.log(messages['chat-1']);
     useEffect(() => {
         let timeout;
-        const currentMessages = messages[chatId];
-        console.log(messages)
-        if (currentMessages[currentMessages.length - 1]?.author === "Human") {
+        const currentMessages = messages;
+
+        if (currentMessages[currentMessages.lenght - 1]?.author === "Human") {
             timeout = setTimeout(() => {
                 sendMessage({
                     messageText: "Howdy, Human",
@@ -45,7 +45,7 @@ function Chats() {
             }, 3000);
         }
         return () => clearTimeout(timeout);
-    }, []);
+    }, [messages]);
     const addMessage = useCallback(
         (messageText) => {
             sendMessage({
@@ -59,9 +59,9 @@ function Chats() {
         <div className="App">
 
             <ChatList chats={chats} />
-            {!!chatId && (<> <div className="messageList">{messages[chatId].map((message) =>
+            {!!chatId && (<> <div className="messageList">{messages[chatId]?.map((message) =>
 
-                < Message message={message} key={message.id} />
+                < Message key={message.id} message={message} />
             )}
                 <Form onSubmit={addMessage} /></div></>)}
 
