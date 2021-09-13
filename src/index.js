@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 
 const myName = 'Alexander';
-
+// const greeting = 'Hello my Teacher'
 
 ReactDOM.render(
   <React.StrictMode>

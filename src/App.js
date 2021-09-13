@@ -1,79 +1,53 @@
 import './styles/App.sass';
-import Message from './Message';
-import { useEffect, useState, } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { TextField, List, ListItem, Button } from '@material-ui/core/';
-import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: "grey",
-    color: "white",
-  },
-  label: {
-    color: "white"
-  }
-});
+import { Form } from './Form';
+import { Message } from './Message';
+import { ChatList } from './ChatList';
+import { useCallback, useEffect, useState } from 'react';
+import uuidv4 from "uuid";
+import { Routes } from './Routes';
 
-const chats = [{ name: "Example" + Math.random(), id: uuidv4() },
-{ name: "Example" + Math.random(), id: uuidv4() },
-{ name: "Example" + Math.random(), id: uuidv4() }];
-console.log(chats);
+
+const defaultMessages = [
+  { messageText: "Lorem ", author: "Human", id: uuidv4() },
+  { messageText: "Lorem Epsum", author: "Human", id: uuidv4() }]
+const defaultChats = [
+  { chatName: "Example 1", id: uuidv4() },
+  { chatName: "Example 2", id: uuidv4() }]
 function App() {
-  const [messages, setMessages] = useState([]);
-  const [value, setText] = useState('');
-  // const [chats, setChats] = useState([]);
-  const classes = useStyles();
-  // const addChat = (chatName) => [...chats, { name: chatName, id: uuidv4() }];
-
-
-  const addMessage = (e) => {
-    e.preventDefault();
-    setMessages((prevMessages) => [...prevMessages, { text: value, author: 'Human', id: uuidv4() }]);
-    e.target.reset();
-  };
-
-  const textInput = (e) => {
-    setText(e.target.value);
-  };
-
-  const botResponce = (bot) => { return bot = { text: 'Howdy, Human', author: 'Bot', id: uuidv4() } };
+  const [messages, setMessages] = useState(defaultMessages);
+  const [chats] = useState(defaultChats);
 
   useEffect(() => {
-    const answerTime = setTimeout(() => {
-      if (messages[messages.length - 1]?.author === 'Human') {
-        setMessages((prevMessages) => [...prevMessages, botResponce()]);
-      }
-    }, 1500);
-    return () =>
-      clearTimeout(answerTime);
+    let timeout;
+    if (messages[messages.length - 1]?.author === "Human") {
+      timeout = setTimeout(() => setMessages((prevMessages) =>
+        [...prevMessages, { messageText: "Howdy, Human", author: "Bot", id: uuidv4() }]), 3000);
+    }
+    return () => clearTimeout(timeout);
   }, [messages]);
+  const addMessage = useCallback((messageText) => {
+    setMessages(prevMess => [...prevMess, { messageText, author: "Human", id: uuidv4() }]);
+  }, []);
+
+
+
 
   return (
+
+
     <div className="App">
-      <List><ListItem style={{ color: 'white' }}>Placeholder for Chat List</ListItem></List>
-      <div className="chat">
+      <><Routes /></>
+      <ChatList chats={chats} />
 
-        <div className="messageList">{messages.map((message, id) => <Message messageList={message} key={id} />)}</div>
+      <div className="messageList">{messages.map((message) =>
 
-        <form className="form" onSubmit={addMessage} >
-          <TextField id="my-input"
-            className={classes.root}
-            placeholder="message"
-            label="Your Message Here"
-            onChange={textInput}
-            inputRef={(input) => {
-              if (input != null) {
-                input.focus();
-              }
-            }}
-          />
-          < Button variant="contained" component="button" type="submit" > Send</Button>
-        </form>
-      </div>
+        < Message message={message} key={message.id} />
+      )}
+        <Form onSubmit={addMessage} /></div>
 
-    </div>
 
-  );
+    </div >
+  )
 }
 
 export default App;
