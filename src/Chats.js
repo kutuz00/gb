@@ -30,12 +30,10 @@ function Chats() {
             ],
         }));
     }, [chatId]);
-    console.log(messages['chat-1']);
     useEffect(() => {
         let timeout;
-        const currentMessages = messages;
-
-        if (currentMessages[currentMessages.lenght - 1]?.author === "Human") {
+        const currentMessages = messages?.[chatId];
+        if (currentMessages?.[currentMessages.length - 1].author === "Human") {
             timeout = setTimeout(() => {
                 sendMessage({
                     messageText: "Howdy, Human",
@@ -54,12 +52,12 @@ function Chats() {
                 id: uuidv4()
             });
 
-        }, [chatId, sendMessage]);
+        }, [chatId]);
     return (
         <div className="App">
 
             <ChatList chats={chats} />
-            {!!chatId && (<> <div className="messageList">{messages[chatId].map((message) =>
+            {!!chatId && (<> <div className="messageList">{messages[chatId]?.map((message) =>
 
                 < Message key={message.id} message={message} />
             )}

@@ -5,12 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 
-const myName = 'Alexander';
-// const greeting = 'Hello my Teacher'
-
 ReactDOM.render(
   <React.StrictMode>
-    <App name={myName} />
+    <App />
 
   </React.StrictMode>,
   document.getElementById("root")

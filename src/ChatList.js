@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 
 export const ChatList = ({ chats }) => {
     return (
-        <div className="list">        <List>
+        <div className="list"> <List>
             {chats.map((chat) =>
-                <ListItem key={chat.id}>
-                    <Link to={`/chats/${chat.id}`}>{chat.chatName}</Link>
-                </ListItem>
+
+                <Link key={chat.id} to={`/chats/${chat.id}`}><ListItem key={chat.id}>{chat.chatName}  </ListItem></Link>
+
 
             )}
         </List ></div>
-    );
+    )
 }
