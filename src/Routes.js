@@ -12,7 +12,7 @@ export const Routes = () => {
             <Route exact path='/'>
                 <Home></Home>
             </Route>
-            <Route path='/chats/:chatId?'>
+            <Route exact path='/chats/:chatId?'>
                 <Chats></Chats>
             </Route>
             <Route path='/profile'>

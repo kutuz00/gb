@@ -59,7 +59,7 @@ function Chats() {
         <div className="App">
 
             <ChatList chats={chats} />
-            {!!chatId && (<> <div className="messageList">{messages[chatId]?.map((message) =>
+            {!!chatId && (<> <div className="messageList">{messages[chatId].map((message) =>
 
                 < Message key={message.id} message={message} />
             )}
