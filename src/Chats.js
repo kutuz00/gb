@@ -52,7 +52,7 @@ function Chats() {
                 id: uuidv4()
             });
 
-        }, [chatId]);
+        }, [chatId, sendMessage]);
     return (
         <div className="App">
 
