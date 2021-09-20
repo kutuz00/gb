@@ -5,6 +5,7 @@ import { ChatList } from './ChatList';
 import { useCallback, useEffect, useState } from 'react';
 import uuidv4 from "uuid";
 import { useParams } from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 const defaultMessages = {
     'chat-1': [
@@ -57,8 +58,9 @@ function Chats() {
         <div className="App">
 
             <ChatList chats={chats} />
-            {!!chatId && (<> <div className="messageList">{messages[chatId]?.map((message) =>
+            {!chatId || !chats[chatId]} < Redirect to="/chats" />
 
+            {!!chatId && (<> <div className="messageList">{messages[chatId]?.map((message) =>
                 < Message key={message.id} message={message} />
             )}
                 <Form onSubmit={addMessage} /></div></>)}
