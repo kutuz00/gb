@@ -1,10 +1,13 @@
 import './styles/App.sass';
+import { Provider } from 'react-redux';
 import { Routes } from './Routes';
+import { store } from './store'
 
 function App() {
 
   return (
-    <Routes />
+    <Provider store={store}><Routes /></Provider>
+
   )
 }
 
