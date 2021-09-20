@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CAAC;EACL,KAAK,EAAE,OAAO;CAAG",
+    "sources": [
+        "Profile.sass"
+    ],
+    "names": [],
+    "file": "Profile.css"
+}
