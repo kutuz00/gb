@@ -1,15 +1,12 @@
 import './styles/Message.sass'
 
-function Message(props) {
+export const Message = ({ message }) => {
     return (
 
-        <header className="Message">
-
-            <h3>{props.text}</h3>
-        </header>
-
-
+        <div className="messageList">
+            <p className="message message-author" key={message.id}>{message.author}</p>
+            <p className="message" key={message.id}>{message.messageText}</p>
+        </div>
     );
 }
 
-export default Message;
