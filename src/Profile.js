@@ -1,5 +1,10 @@
+import './styles/Profile.sass';
+
 export const Profile = () => {
+
     return (
-        <h3>Profile page</h3>
+        <div className='profile'>        <h3>Profile page</h3>
+            <input type='checkbox' /></div>
+
     )
 }
