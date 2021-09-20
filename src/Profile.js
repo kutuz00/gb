@@ -1,4 +1,3 @@
-import { store } from './store';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { toggleShowName } from './store/profile/actions';
