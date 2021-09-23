@@ -53,11 +53,30 @@ function Chats() {
                 id: uuidv4()
             });
 
-        }, [chatId, sendMessage]);
+        }, [sendMessage]);
+    const addNewChat = useCallback((name) => {
+        const id = uuidv4();
+        setChats((prevChats) => [...prevChats, {
+            id,
+            name,
+        }]);
+        setMessages(prevMess => ({
+            ...prevMess,
+            [id]: [],
+        }));
+    }, []);
+    const deleteChat = useCallback((id) => {
+        const newChats = chats.filter((chat) => chat.id !== id);
+        setChats(newChats);
+
+        const newMess = { ...messages };
+        delete newMess[id];
+        setMessages(newMess)
+    }, [chats, messages]);
     return (
         <div className="App">
 
-            <ChatList chats={chats} />
+            <ChatList chats={chats} addChat={addNewChat} deleteChat={deleteChat} />
             {!chatId || !chats[chatId]} < Redirect to="/chats" />
 
             {!!chatId && (<> <div className="messageList">{messages[chatId]?.map((message) =>

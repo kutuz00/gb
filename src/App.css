@@ -10,7 +10,9 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+.add-chat{
+  height: 40px;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -30,6 +32,7 @@
 
 .App-link {
   color: #61dafb;
+  text-decoration: none;
 }
 
 @keyframes App-logo-spin {
