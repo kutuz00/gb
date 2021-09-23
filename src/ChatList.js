@@ -26,8 +26,6 @@ export const ChatList = ({ chats, addChat, deleteChat }) => {
                     <Button variant='contained'>Add chat</Button>
                 </form><List>
                         <ListItem className='button' key={chat.id}><ChatItem chat={chat}>{chat.chatName}</ChatItem></ListItem>
-
-
                     </List></>
 </div>
     )
