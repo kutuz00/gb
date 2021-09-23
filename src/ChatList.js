@@ -17,16 +17,15 @@ export const ChatList = ({ chats, addChat, deleteChat }) => {
 
     }
     return (
-
-
-        <div className="list App-link">
-            {chats.map((chat) => {
-                <><form className='form'>
-                    <input className='input' type='text' value={value} />
-                    <Button variant='contained'>Add chat</Button>
-                </form><List>
-                        <ListItem className='button' key={chat.id}><ChatItem chat={chat}>{chat.chatName}</ChatItem></ListItem>
-                    </List></>
+        <>
+            <div className="list App-link">
+                {chats.map((chat) => {
+                    <><form className='form'>
+                        <input className='input' type='text' value={value} />
+                        <Button variant='contained'>Add chat</Button>
+                    </form><List>
+                            <ListItem className='button' key={chat.id}><ChatItem chat={chat}>{chat.chatName}</ChatItem></ListItem>
+                        </List></>
 </div></>
     )
 }
