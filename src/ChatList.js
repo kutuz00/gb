@@ -27,6 +27,6 @@ export const ChatList = ({ chats, addChat, deleteChat }) => {
                 </form><List>
                         <ListItem className='button' key={chat.id}><ChatItem chat={chat}>{chat.chatName}</ChatItem></ListItem>
                     </List></>
-</div>
+</div></>
     )
 }
