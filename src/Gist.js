@@ -1,4 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
+import { useCallback } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGists } from "./store/gist/actions";
@@ -9,12 +10,12 @@ export const Gist = () => {
     const error = useSelector(selectGistsError);
     const loading = useSelector(selectGistsLoading);
     const gists = useSelector(selectGists);
-    const reload = () => {
-        dispatch(getGists);
-    };
+    const reload = useCallback(() => {
+        dispatch(getGists());
+    }, [dispatch]);
     useEffect(() => {
         reload();
-    }, []);
+    }, [reload]);
     return (
         <div><h3>From Gist</h3>
             {error ?

@@ -17,7 +17,7 @@ const getGistsFailure = (error) => ({
 });
 export const getGists = () => (dispatch) => {
     dispatch(getGistsPending());
-    fetch(PUBLIC_URL, 'GET')
+    fetch(PUBLIC_URL)
         .then((responce) => {
             if (!responce.ok) {
 
@@ -31,7 +31,7 @@ export const getGists = () => (dispatch) => {
         })
         .catch((e) => {
             dispatch(getGistsFailure(e.message));
-        });
+        })
 };
 
 // export const getGists = () => async (dispatch) => {

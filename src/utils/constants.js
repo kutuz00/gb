@@ -1,4 +1,4 @@
-export const PUBLIC_URL = 'https://api.github.com/gists/public';
+export const PUBLIC_URL = "https://api.github.com/gists/public";
 
 export const REQUEST_STATUS = {
     IDLE: 0,
