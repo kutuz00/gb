@@ -3,7 +3,7 @@ import { Form } from './Form';
 import { Message } from './Message';
 import { ChatList } from './ChatList';
 import { useSelector, useDispatch } from 'react-redux'
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Redirect, useHistory } from 'react-router';
 import { addBotMessage } from './store/messages/actions';
@@ -28,13 +28,7 @@ function Chats() {
             sendMessage(
                 messageText, "Human",
             );
-
         }, [sendMessage]);
-
-
-
-
-
 
     const addNewChat = useCallback((chatName) => {
         dispatch(addChat(chatName));
