@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, List, ListItem } from "@material-ui/core";
+import { Button, ListItem } from "@material-ui/core";
 import { ChatItem } from './ChatItem';
 import './App.css';
 
