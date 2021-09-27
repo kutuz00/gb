@@ -9,7 +9,7 @@ import storage from 'redux-persist/lib/storage';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistConfig = {
-    key: 'root',
+    key: 'GB-2021',
     storage,
 }
 const rootReducer = combineReducers({
