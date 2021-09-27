@@ -19,13 +19,16 @@ export const Profile = () => {
     }, []);
 
     const setName = useCallback(() => {
+
         dispatch(changeName(value))
+        setValue('');
+
     }, [dispatch, value]);
 
     return (
         <>
             <div>
-                <h4>Profile</h4>
+                <h4>{name.name}`s profile page</h4>
             </div>
             <div>
                 <input type="text" value={value} onChange={handleChange} />

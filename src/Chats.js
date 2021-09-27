@@ -2,87 +2,75 @@ import './styles/App.sass';
 import { Form } from './Form';
 import { Message } from './Message';
 import { ChatList } from './ChatList';
-import { useCallback, useEffect, useState } from 'react';
-import uuidv4 from "uuid";
+import { useSelector, useDispatch } from 'react-redux'
+import { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
+import { addMessage } from './store/messages/actions';
+import { addChat, deleteChat } from './store/chats/actions';
 
-const defaultMessages = {
-    'chat-1': [
-        { messageText: "Example 1 text message ", author: "Human", id: uuidv4() },
-        { messageText: "Example 2 text message ", author: "Human", id: uuidv4() }
-    ],
-    'chat-2': [
-        [],
-    ],
-}
-const defaultChats =
-    [{ chatName: "Example 1", id: "chat-1" },
-    { chatName: "Example 2", id: "chat-2" }];
 function Chats() {
     const { chatId } = useParams();
-    const [messages, setMessages] = useState(defaultMessages);
-    const [chats, setChats] = useState(defaultChats);
-    const sendMessage = useCallback((messages) => {
-        setMessages((prevMess) => ({
-            ...prevMess,
-            [chatId]: [
-                ...prevMess[chatId], messages
-            ],
-        }));
-    }, [chatId]);
+    const history = useHistory();
+    const chats = useSelector((state) => state.chats.chatList);
+    const messages = useSelector(state => state.messages.messageList);
+    const dispatch = useDispatch();
+
+
+
+
+
+    const sendMessage = useCallback((message, author) => {
+        dispatch(addMessage(chatId, message, author));
+    }, [chatId, dispatch]);
+
+    const onAddMessage = useCallback(
+        (messageText) => {
+            sendMessage(
+                messageText, "Human",
+            );
+
+        }, [sendMessage]);
     useEffect(() => {
         let timeout;
         const currentMessages = messages?.[chatId];
-        if (currentMessages?.[currentMessages.length - 1].author === "Human") {
+        if (!!chatId && currentMessages?.[currentMessages.length - 1]?.author === "Human") {
             timeout = setTimeout(() => {
-                sendMessage({
-                    messageText: "Howdy, Human",
-                    author: "Bot",
-                    id: uuidv4()
-                });
+                sendMessage("Howdy, Human", "Bot",);
             }, 3000);
         }
         return () => clearTimeout(timeout);
-    }, [messages]);
-    const addMessage = useCallback(
-        (messageText) => {
-            sendMessage({
-                messageText,
-                author: "Human",
-                id: uuidv4()
-            });
+    }, [messages, chatId, sendMessage]);
 
-        }, [sendMessage]);
-    const addNewChat = useCallback((name) => {
-        const id = uuidv4();
-        setChats((prevChats) => [...prevChats, {
-            id,
-            name,
-        }]);
-        setMessages(prevMess => ({
-            ...prevMess,
-            [id]: [],
-        }));
-    }, []);
-    const deleteChat = useCallback((id) => {
-        const newChats = chats.filter((chat) => chat.id !== id);
-        setChats(newChats);
 
-        const newMess = { ...messages };
-        delete newMess[id];
-        setMessages(newMess)
-    }, [chats, messages]);
+    const chatExist = useMemo(() => !!chats.find(({ id }) => id === chatId), [chatId, chats]);
+    const addNewChat = useCallback((chatName) => {
+        dispatch(addChat(chatName));
+    }, [dispatch]);
+
+    const onDeleteChat = useCallback((id) => {
+        dispatch(deleteChat(id));
+        if (chatId !== id) {
+            return;
+        }
+        if (chats.length === 1) {
+            history.push(`/chats/${chats[0].id}`);
+        }
+        else {
+            history.push(`/chats/`);
+        }
+    }, [chats, history, chatId, dispatch]);
     return (
         <div className="App">
 
-            <ChatList chats={chats} addChat={addNewChat} deleteChat={deleteChat} />
+            <ChatList chats={chats} onAddChat={addNewChat} onDeleteChat={onDeleteChat} />
             {!chatId || !chats[chatId]} < Redirect to="/chats" />
 
-            {!!chatId && (<> <div className="messageList">{messages[chatId]?.map((message) =>
-                < Message key={message.id} message={message} />
+            {!!chatId && chatExist && (<div className="messageList">{(messages[chatId] || []).map((message, id) =>
+                (< Message message={message} key={id} />)
             )}
-                <Form onSubmit={addMessage} /></div></>)}
+                <Form onSubmit={onAddMessage} /></div>)
+            }
 
         </div >
     )
