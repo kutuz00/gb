@@ -1,10 +1,9 @@
 import { DELETE_CHAT } from "../chats/actions";
 import { ADD_MESSAGE } from "./actions";
 import { DELETE_MESSAGE } from "./actions";
-import { v4 as uuidv4 } from 'uuid';
+import uid from 'crypto-uid';
 
 const initialState = {
-    // to be stored like this {[chatId]: [{id, text, author}]}
     messageList: {},
 };
 
@@ -20,7 +19,7 @@ export const messagesReducer = (state = initialState, action) => {
                         ...currentList,
                         {
                             ...state.messageList,
-                            id: `${action.payload.chatId}${uuidv4()}`,
+                            id: `${action.payload.chatId}${uid(6)}`,
                             messageText: action.payload.message,
                             author: action.payload.author
 

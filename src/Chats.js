@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Redirect, useHistory } from 'react-router';
-import { addMessage } from './store/messages/actions';
+import { addBotMessage } from './store/messages/actions';
+import { selectIfChatExists } from './store/chats/selectors'
 import { addChat, deleteChat } from './store/chats/actions';
 
 function Chats() {
@@ -14,14 +15,12 @@ function Chats() {
     const history = useHistory();
     const chats = useSelector((state) => state.chats.chatList);
     const messages = useSelector(state => state.messages.messageList);
+    const selectChatExists = useMemo(() => selectIfChatExists(chatId), [chatId]);
+    const chatExist = useSelector(selectChatExists);
     const dispatch = useDispatch();
 
-
-
-
-
     const sendMessage = useCallback((message, author) => {
-        dispatch(addMessage(chatId, message, author));
+        dispatch(addBotMessage(chatId, message, author));
     }, [chatId, dispatch]);
 
     const onAddMessage = useCallback(
@@ -31,19 +30,12 @@ function Chats() {
             );
 
         }, [sendMessage]);
-    useEffect(() => {
-        let timeout;
-        const currentMessages = messages?.[chatId];
-        if (!!chatId && currentMessages?.[currentMessages.length - 1]?.author === "Human") {
-            timeout = setTimeout(() => {
-                sendMessage("Howdy, Human", "Bot",);
-            }, 3000);
-        }
-        return () => clearTimeout(timeout);
-    }, [messages, chatId, sendMessage]);
 
 
-    const chatExist = useMemo(() => !!chats.find(({ id }) => id === chatId), [chatId, chats]);
+
+
+
+
     const addNewChat = useCallback((chatName) => {
         dispatch(addChat(chatName));
     }, [dispatch]);

@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import uid from 'crypto-uid';
 import { ADD_CHAT } from "./actions";
 import { DELETE_CHAT } from "./actions";
 
@@ -14,7 +14,7 @@ export const chatsReducer = (state = initialState, { type, payload }) => {
                 chatList: [
                     ...state.chatList,
                     {
-                        id: uuidv4(),
+                        id: uid(6),
                         name: payload,
                     },
                 ],
