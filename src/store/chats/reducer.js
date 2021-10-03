@@ -1,5 +1,5 @@
 import uid from 'crypto-uid';
-import { ADD_CHAT } from "./actions";
+import { ADD_CHAT, SET_CHATS } from "./actions";
 import { DELETE_CHAT } from "./actions";
 
 const initialState = {
@@ -24,6 +24,11 @@ export const chatsReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 chatList: newChats,
+            };
+        case SET_CHATS:
+            return {
+                ...state,
+                chatList: payload,
             };
         default:
             return state;

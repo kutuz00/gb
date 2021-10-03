@@ -6,29 +6,35 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Redirect, useHistory } from 'react-router';
-import { addBotMessage } from './store/messages/actions';
+import { addBotMessage, initMessages, messagesToDb } from './store/messages/actions';
 import { selectIfChatExists } from './store/chats/selectors'
-import { addChat, deleteChat } from './store/chats/actions';
+import { addChat, deleteChat, initChats } from './store/chats/actions';
+import { useEffect } from 'react';
 
 function Chats() {
     const { chatId } = useParams();
     const history = useHistory();
     const chats = useSelector((state) => state.chats.chatList);
-    const messages = useSelector(state => state.messages.messageList);
+    const messages = useSelector((state) => state.messages.messagesList);
+
     const selectChatExists = useMemo(() => selectIfChatExists(chatId), [chatId]);
-    const chatExist = useSelector(selectChatExists);
+    const chatExists = useSelector(selectChatExists);
+
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(initChats());
+        dispatch(initMessages());
+    }, [dispatch]);
 
     const sendMessage = useCallback((message, author) => {
-        dispatch(addBotMessage(chatId, message, author));
+        dispatch(messagesToDb(message, author, chatId));
     }, [chatId, dispatch]);
 
-    const onAddMessage = useCallback(
-        (messageText) => {
-            sendMessage(
-                messageText, "Human",
-            );
-        }, [sendMessage]);
+    const onAddMessage = useCallback((messageText) => {
+        sendMessage(
+            messageText, "Human",
+        );
+    }, [sendMessage]);
 
     const addNewChat = useCallback((chatName) => {
         dispatch(addChat(chatName));
@@ -52,11 +58,14 @@ function Chats() {
             <ChatList chats={chats} onAddChat={addNewChat} onDeleteChat={onDeleteChat} />
             {!chatId || !chats[chatId]} < Redirect to="/chats" />
 
-            {!!chatId && chatExist && (<div className="messageList">{(messages[chatId] || []).map((message, id) =>
-                (< Message message={message} key={id} />)
+            {!!chatId && chatExists && (
+                <>
+                    {(Object.values(messages[chatId] || {}) || []).map((message) => (
+                        <Message key={message.id} text={message.text} id={message.id} author={message.author} />
+                    ))}
+                    <Form onSubmit={onAddMessage} />
+                </>
             )}
-                <Form onSubmit={onAddMessage} /></div>)
-            }
 
         </div >
     )
