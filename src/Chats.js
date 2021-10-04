@@ -28,7 +28,7 @@ function Chats() {
 
     const sendMessage = useCallback((message, author) => {
         dispatch(messagesToDb(message, author, chatId));
-    }, [chatId, dispatch]);
+    }, [chatId]);
 
     const onAddMessage = useCallback((messageText) => {
         sendMessage(
@@ -59,12 +59,12 @@ function Chats() {
             {!chatId || !chats[chatId]} < Redirect to="/chats" />
 
             {!!chatId && chatExists && (
-                <>
+                <div lclassName='chat'>
                     {(Object.values(messages[chatId] || {}) || []).map((message) => (
                         <Message key={message.id} text={message.text} id={message.id} author={message.author} />
                     ))}
                     <Form onSubmit={onAddMessage} />
-                </>
+                </div>
             )}
 
         </div >

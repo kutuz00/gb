@@ -20,6 +20,8 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  height: 250px;
+  overflow: hidden;
 }
 
 .form {
