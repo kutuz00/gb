@@ -1,4 +1,5 @@
 import './styles/App.sass';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Routes } from './Routes';
 import { PersistGate } from 'redux-persist/lib/integration/react';

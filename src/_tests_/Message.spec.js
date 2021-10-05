@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { Message } from "../Message";
 
 describe('Message test', () => {
-    it('match snapshot', () => {
+    it('match text adn author', () => {
         const text = "Test text"
         const author = "Test author"
         const component = render(<Message text={text} author={author} />);

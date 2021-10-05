@@ -1,7 +1,7 @@
 import { TOGGLE_SHOW_NAME, CHANGE_NAME } from "./actions"
 
 const initialState = {
-    showname: false,
+    showName: false,
     name: 'Default',
 
 }
