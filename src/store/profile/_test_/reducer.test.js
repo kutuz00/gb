@@ -1,7 +1,7 @@
 import { profileReducer } from '../reducer.js';
 import { TOGGLE_SHOW_NAME, CHANGE_NAME } from '../actions.js';
 
-const TO_TEST_DEFAULT = 'TO_TEST_DEFAULT'
+const TO_TEST_DEFAULT = 'TO_TEST_DEFAULT';
 describe('Profile reducer', () => {
     const state = {
         showName: false,
