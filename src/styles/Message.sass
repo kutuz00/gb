@@ -1,10 +1,18 @@
 body
     background-color: darken(blue, 40)
-.Message
-    font-size: 45px
-    color: darken(grey, 10)
-    min-height: 100vh
+.messageList
+    font-size: 25px
+    color: darken(grey, 5)
+    background-color: #3e3e3e
     display: flex
     flex-direction: column
     align-items: center
     justify-content: center
+    padding: 10px 0
+    .message
+        margin: 0
+        display: flex
+        flex-direction: column
+        &-author
+            font-size: 20px
+            color: darken(grey, 10)
